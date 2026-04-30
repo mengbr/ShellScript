@@ -82,9 +82,9 @@ function marcar_concluida() {
             # Substituir [ ] por [x] se não estiver concluída
             if [[ "$status" == "[]" ]]; then
                 echo "[x]|$resto" >> "$temp_file"
-        else
-            echo "[]|$resto" >> "$temp_file"
-        fi
+            else
+                echo "[]|$resto" >> "$temp_file"
+            fi
 
         else
             echo "$status|$resto" >> "$temp_file"
@@ -96,6 +96,26 @@ function marcar_concluida() {
     mv "$temp_file" "$TODO_FILE"
 
     echo "Tarefa $numero marcada/desmarcada com sucesso!"
+
+}
+
+function remover_tarefa() {
+    local numero="$1"
+    local temp_file=$(mktemp)
+
+    # Processar o arquivo linha por linha
+    linha=1
+    while read -r tarefa; do
+        if [ "$linha" -ne "$numero" ]; then
+            echo "$tarefa" >> "$temp_file"
+        fi
+        linha=$((linha + 1))
+    done < "$TODO_FILE"
+    
+    # Substituir o arquivo original
+    mv "$temp_file" "$TODO_FILE"
+
+    echo "Tarefa $numero removida com sucesso"
 
 }
 
@@ -112,7 +132,7 @@ case "$1" in
         marcar_concluida "$2"
         ;;
     del)
-        # Implementar remoção de tarefas
+        remover_tarefa "$2"
         ;;
     search)
         # Implementar pesquisa de tarefas
