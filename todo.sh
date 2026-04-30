@@ -76,11 +76,18 @@ function marcar_concluida() {
     # Processar o arquivo linha por linha
     linha=1
     while IFS="|" read -r status resto; do
-        # se a linha for igual a que informei e status for vazio então
-        if [[ "$linha" -eq "$numero" && "$status" == "[]" ]]; then
-            echo  "[x]|$resto" >> "$temp_file"
+        # se a linha for igual a que informei então
+        if [ "$linha" -eq "$numero" ]; then
+
+            # Substituir [ ] por [x] se não estiver concluída
+            if [[ "$status" == "[]" ]]; then
+                echo "[x]|$resto" >> "$temp_file"
         else
             echo "[]|$resto" >> "$temp_file"
+        fi
+
+        else
+            echo "$status|$resto" >> "$temp_file"
         fi
         linha=$((linha + 1))
     done < "$TODO_FILE"
