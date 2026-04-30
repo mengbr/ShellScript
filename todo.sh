@@ -50,6 +50,21 @@ function adicionar_tarefa() {
     echo "Tarefa adicionada com sucesso!"
 }
 
+# Função para listar as tarefas salvas
+function listar_tarefas() {
+
+    # Variável responsável por adicionar o número da linha
+    local linha=1
+
+    # O IFS (Internal Field Separator) é uma variável usada 
+    # para dividir linhas em palavras através do separador especificado 
+    # é utilizado em conjunto com o comando read.
+    while IFS="|" read -r status data prioridade descricao; do
+        echo -e "${linha}. $status | $data | $prioridade | $descricao"
+        linha=$((linha + 1))
+    done < "$TODO_FILE"
+}
+
 # Processamento dos comandos por meio de SWITCH CASE
 # O primeiro argumento "$1" será o comando passado para o script
 case "$1" in
@@ -57,7 +72,7 @@ case "$1" in
         adicionar_tarefa "$2" "$3"
         ;;
     list)
-        # Implementar listagem de tarefas
+        listar_tarefas
         ;;
     done)
         # Implementar marcação de tarefas concluídas
