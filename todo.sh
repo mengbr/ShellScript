@@ -35,11 +35,26 @@ function mostrar_ajuda() {
     echo "  $0 add \"Preparar aula de Shell Script\" alta"
 }
 
+# Função para adicionar uma tarefa no arquivo
+function adicionar_tarefa() {
+    # Variaveis locais para controle
+    # $1 e $2 são argumentos passados para a função que foi chamada no Switch Case
+    local descricao="$1"
+    local prioridade="$2"
+
+    # Obter a data atual no formato 2026-04-28
+    local data=$(date +%Y-%m-%d)
+
+    # Adicionar tarefa ao arquivo
+    echo "[]|$data|$prioridade|$descricao" >> "$TODO_FILE"
+    echo "Tarefa adicionada com sucesso!"
+}
+
 # Processamento dos comandos por meio de SWITCH CASE
 # O primeiro argumento "$1" será o comando passado para o script
 case "$1" in
     add)
-        # Implementar adição de tarefas
+        adicionar_tarefa "$2" "$3"
         ;;
     list)
         # Implementar listagem de tarefas
@@ -62,3 +77,5 @@ case "$1" in
         exit 1
         ;;
 esac
+
+exit 0
