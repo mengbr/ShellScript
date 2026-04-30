@@ -4,6 +4,7 @@
 - Local: Universidade de Ribeirão Preto
 - Professor: Michael Oliveira
 - Data: 28/04/2026 a 30/04/2026
+- [Slides MiniCurso](SlideMiniCursoShell.pdf)
 
 ## Referencias para consulta e aperfeiçoamento
 - Canivete shell: https://aurelio.net/shell/canivete/
