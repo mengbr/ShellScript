@@ -18,6 +18,14 @@ if [ ! -e "$TODO_FILE" ]; then
     touch "$TODO_FILE"
 fi
 
+# Cores para melhorar a visualização
+RED="\e[1;31m"
+GREEN="\e[1;32m"
+YELLOW="\e[1;33m"
+BLUE="\e[1;44m"
+PURPLE="\e[1;35m"
+NC="\e[0m" # No Color
+
 # Função de ajuda que mostra as opções disponíveis
 # $0 é a variavel que traz o primeiro argumento do script que é o próprio nome do script
 function mostrar_ajuda() {
@@ -32,7 +40,7 @@ function mostrar_ajuda() {
     echo "  help                        Mostrar esta ajuda"
     echo
     echo "Exemplo:"
-    echo "  $0 add \"Preparar aula de Shell Script\" alta"
+    echo -e "${YELLOW}  $0 add \"Preparar aula de Shell Script\" alta ${NC}"
 }
 
 # Função para adicionar uma tarefa no arquivo
