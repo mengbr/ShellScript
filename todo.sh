@@ -65,6 +65,33 @@ function listar_tarefas() {
     done < "$TODO_FILE"
 }
 
+# Conclui uma tarefa de acordo com a linha especificada
+function marcar_concluida() {
+    # Pega o numero informado para conlcuir a tarefa com a linha específica
+    local numero="$1"
+
+    # Cria um arquivo temporário
+    local temp_file=$(mktemp)
+
+    # Processar o arquivo linha por linha
+    linha=1
+    while IFS="|" read -r status resto; do
+        # se a linha for igual a que informei e status for vazio então
+        if [[ "$linha" -eq "$numero" && "$status" == "[]" ]]; then
+            echo  "[x]|$resto" >> "$temp_file"
+        else
+            echo "[]|$resto" >> "$temp_file"
+        fi
+        linha=$((linha + 1))
+    done < "$TODO_FILE"
+    
+    # Substituir o arquivo original
+    mv "$temp_file" "$TODO_FILE"
+
+    echo "Tarefa $numero marcada/desmarcada com sucesso!"
+
+}
+
 # Processamento dos comandos por meio de SWITCH CASE
 # O primeiro argumento "$1" será o comando passado para o script
 case "$1" in
@@ -75,7 +102,7 @@ case "$1" in
         listar_tarefas
         ;;
     done)
-        # Implementar marcação de tarefas concluídas
+        marcar_concluida "$2"
         ;;
     del)
         # Implementar remoção de tarefas
