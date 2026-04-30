@@ -9,3 +9,4 @@
 ## Referencias para consulta e aperfeiçoamento
 - Canivete shell: https://aurelio.net/shell/canivete/
 - Curso Shell Script profissional: https://www.youtube.com/@Geofisicando/
+- Livro Shell Script Profissional: https://www.novatec.com.br/livros/shellscript/
