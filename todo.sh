@@ -119,6 +119,27 @@ function remover_tarefa() {
 
 }
 
+function pesquisar_tarefas() {
+    local termo="$1"
+
+    # Pesquisar no arquivo e mostrar resultados com números
+    local resultados=$(grep -i "$termo" "$TODO_FILE")
+
+    # Se resultado for vazio então exibe a mensagem e encerra a função
+    if [ -z "$resultados" ]; then
+        echo "Nenhuma tarefa encontrada com o termo \"$termo\"."
+        return 0
+    fi
+
+    # Mostrar resultados encontrados
+    numero=1
+    while IFS="|" read -r status data prioridade descricao; do
+        echo  "${numero}. $status | $data | $prioridade | $descricao"
+        numero=$((numero + 1))
+    done <<< "$resultados"
+    # o <<< é para usar uma string como entrada para o while
+}
+
 # Processamento dos comandos por meio de SWITCH CASE
 # O primeiro argumento "$1" será o comando passado para o script
 case "$1" in
@@ -135,7 +156,7 @@ case "$1" in
         remover_tarefa "$2"
         ;;
     search)
-        # Implementar pesquisa de tarefas
+        pesquisar_tarefas "$2"
         ;;
     help)
         mostrar_ajuda
