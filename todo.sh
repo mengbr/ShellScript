@@ -19,7 +19,7 @@ if [ ! -e "$TODO_FILE" ]; then
 fi
 
 # Função de ajuda que mostra as opções disponíveis
-# $0 variavel que traz o primeiro argumento do script que é o ome do programa
+# $0 é a variavel que traz o primeiro argumento do script que é o próprio nome do script
 function mostrar_ajuda() {
     echo "Uso: $0 [opção] [argumentos]"
     echo
@@ -35,9 +35,30 @@ function mostrar_ajuda() {
     echo "  $0 add \"Preparar aula de Shell Script\" alta"
 }
 
-# Verificar se nenhum argumento foi passado
-# $# = quantidade de parametros passados ao chamar o programa /todo.sh
-if [ $# -eq 0 ]; then
-    mostrar_ajuda
-    exit 0
-fi
+# Processamento dos comandos por meio de SWITCH CASE
+# O primeiro argumento "$1" será o comando passado para o script
+case "$1" in
+    add)
+        # Implementar adição de tarefas
+        ;;
+    list)
+        # Implementar listagem de tarefas
+        ;;
+    done)
+        # Implementar marcação de tarefas concluídas
+        ;;
+    del)
+        # Implementar remoção de tarefas
+        ;;
+    search)
+        # Implementar pesquisa de tarefas
+        ;;
+    help)
+        mostrar_ajuda
+        ;;
+    *)
+        echo "Comando desconhecido: $1"
+        mostrar_ajuda
+        exit 1
+        ;;
+esac
